@@ -8,6 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { LocalStorage } from './local.strategy';
 import { JwtStorage } from './jwt.strategy';
 import { UserService } from '../user/user.service';
+import {TwitterStrategy} from "./twitter.strategy"
 
 const jwtModule = JwtModule.register({
   secret: 'testSecret',
@@ -17,6 +18,6 @@ const jwtModule = JwtModule.register({
 @Module({
   imports: [TypeOrmModule.forFeature([User]), PassportModule, jwtModule],
   controllers: [AuthController],
-  providers: [AuthService, LocalStorage, JwtStorage, UserService],
+  providers: [AuthService, LocalStorage, JwtStorage, UserService,TwitterStrategy],
 })
 export class AuthModule {}

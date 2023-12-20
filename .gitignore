@@ -8,6 +8,9 @@
 .history
 package-lock.json
 yarn.lock
+/dist*
+dist
+
 
 # testing
 /coverage

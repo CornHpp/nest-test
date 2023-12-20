@@ -6,6 +6,7 @@ import {
   UseGuards,
   UseInterceptors,
   ClassSerializerInterceptor,
+  Get,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
@@ -16,6 +17,8 @@ import { AuthService } from '../auth/auth.service';
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
+
   @UseGuards(AuthGuard('local'))
   @UseInterceptors(ClassSerializerInterceptor)
   @Post('login')
@@ -24,5 +27,18 @@ export class AuthController {
     // 通过 AuthService 的 createToken 方法生成 JWT
     const token = await this.authService.createToken(authenticatedUser);
     return token;
+  }
+
+  @Get('twitter')
+  @UseGuards(AuthGuard('twitter'))
+  async twitterLogin() {}
+
+  @Get('twitter/callback')
+  @UseGuards(AuthGuard('twitter'))
+  twitterLoginCallback(@Req() req: any) {
+    return {
+      message: 'Twitter login successful',
+      user: req.user,
+    };
   }
 }
